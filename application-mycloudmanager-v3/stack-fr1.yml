@@ -91,7 +91,7 @@ parameters:
     type: string
 
   peer:
-    default: 10.1.1.10
+    default: 10.1.1.10 10.1.1.11 10.1.1.12
     label: Peer
     type: string
 

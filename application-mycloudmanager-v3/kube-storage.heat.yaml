@@ -135,7 +135,7 @@ resources:
                   CEPH=$ceph$
                   MONITORING=$monitoring$
                   ETCD_NODES=3
-                  PEER=$peer$
+                  PEER="$peer$"
                   PIDALIO_TOKEN=$token$
                   DOMAIN=$domain$
                   PATH=/opt/bin/:/usr/bin/:/usr/sbin:$PATH
@@ -163,6 +163,7 @@ resources:
                     do
                       /opt/bin/weave rmpeer $peer
                     done
+                    /usr/bin/docker rm $(/usr/bin/docker ps -q -a -f status=exited)
                     sleep 60
                   done
             coreos:
