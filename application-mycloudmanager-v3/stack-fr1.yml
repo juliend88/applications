@@ -19,28 +19,6 @@ parameters:
     type: boolean
     default: 0
 
-  os_username:
-    description: OpenStack Username
-    label: OpenStack Username
-    type: string
-
-  os_password:
-    description: OpenStack Password
-    label: OpenStack Password
-    type: string
-    hidden: true
-
-  os_tenant:
-    description: OpenStack Tenant Name
-    label: OpenStack Tenant Name
-    type: string
-
-  os_auth:
-    description: OpenStack Auth URL
-    default: https://identity.fr1.cloudwatt.com/v2.0
-    label: OpenStack Auth URL
-    type: string
-
   monitoring:
     description: Activate Monitoring
     label: monitoring
@@ -54,7 +32,7 @@ parameters:
     type: string
 
   flavor:
-    default: n1.cw.standard-2
+    default: n2.cw.standard-2
     description: Flavor to use for the deployed instances
     type: string
     label: Instance Type (Flavor)
@@ -62,7 +40,7 @@ parameters:
       - allowed_values:
           - s1.cw.small-1
           - n1.cw.standard-1
-          - n2.cw.standard-1
+          - n2.cw.standard-2
           - n1.cw.standard-2
           - n1.cw.standard-4
           - n1.cw.standard-8
@@ -75,10 +53,10 @@ parameters:
     description: Node counts
     type: number
     constraints:
-      - range: { min: 1, max: 10 }
+      - range: { min: 1, max: 50 }
 
   storage_count:
-    default: 1
+    default: 2
     label: Storage Count
     description: Storage counts
     type: number
@@ -95,7 +73,39 @@ parameters:
     label: Peer
     type: string
 
+  os_username:
+    description: OpenStack Username
+    label: OpenStack Username
+    type: string
+
+  os_password:
+    description: OpenStack Password
+    label: OpenStack Password
+    type: string
+    hidden: true
+
+  os_tenant_name:
+    description: OpenStack Tenant Name
+    label: OpenStack Tenant Name
+    type: string
+
+  os_auth_url:
+    description: OpenStack Auth URL
+    default: https://identity.fr1.cloudwatt.com/v2.0
+    label: OpenStack Auth URL
+    type: string
+
 resources:
+  vpn_username:
+    type: OS::Heat::RandomString
+    properties:
+      length: 10
+
+  vpn_password:
+    type: OS::Heat::RandomString
+    properties:
+      length: 10
+
   network:
     type: OS::Neutron::Net
 
@@ -131,17 +141,6 @@ resources:
         - { direction: ingress, protocol: ICMP }
         - { direction: egress }
 
-
-  vpn_username:
-    type: OS::Heat::RandomString
-    properties:
-      length: 10
-
-  vpn_password:
-    type: OS::Heat::RandomString
-    properties:
-      length: 10
-
   nodes:
     type: OS::Heat::AutoScalingGroup
     properties:
@@ -157,17 +156,15 @@ resources:
           network: { get_resource: network }
           keypair_name: { get_param: keypair_name }
           flavor_name: { get_param: flavor }
+          os_username: { get_param: os_username }
+          os_password: { get_param: os_password }
+          os_tenant_name: { get_param: os_tenant_name }
+          os_auth_url: { get_param: os_auth_url }
           os_region: fr1
           ceph: { get_param: ceph }
           monitoring: { get_param: monitoring }
           subnet: { get_resource: subnet }
           floating_network: 6ea98324-0f14-49f6-97c0-885d1b8dc517
-          os_username: { get_param: os_username }
-          os_password: { get_param: os_password }
-          os_tenant: { get_param: os_tenant }
-          os_auth: { get_param: os_auth}
-          vpn_username: { get_resource: vpn_username }
-          vpn_password: { get_resource: vpn_password }
 
   storages:
     type: OS::Heat::AutoScalingGroup
@@ -184,17 +181,15 @@ resources:
           network: { get_resource: network }
           keypair_name: { get_param: keypair_name }
           flavor_name: { get_param: flavor }
+          os_username: { get_param: os_username }
+          os_password: { get_param: os_password }
+          os_tenant_name: { get_param: os_tenant_name }
+          os_auth_url: { get_param: os_auth_url }
           os_region: fr1
           ceph: { get_param: ceph }
           monitoring: { get_param: monitoring }
           subnet: { get_resource: subnet }
           floating_network: 6ea98324-0f14-49f6-97c0-885d1b8dc517
-          os_username: { get_param: os_username }
-          os_password: { get_param: os_password }
-          os_tenant: { get_param: os_tenant }
-          os_auth: { get_param: os_auth}
-          vpn_username: { get_resource: vpn_username }
-          vpn_password: { get_resource: vpn_password }
 
   scaleup_policy:
     type: OS::Heat::ScalingPolicy
