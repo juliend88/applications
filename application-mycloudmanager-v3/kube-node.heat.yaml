@@ -117,7 +117,7 @@ resources:
                   [remote]
                   type = swift
                   user = $os_username$
-                  key = "$os_password$"
+                  key = $os_password$
                   auth = $os_auth_url$
                   tenant = $os_tenant_name$
                   region = $os_region$
@@ -128,6 +128,7 @@ resources:
                   NODE_IP=$private_ipv4$
                   NODE_PUBLIC_IP=$public_ipv4$
                   NODE_TYPE=$os_region$
+                  NODE_NETWORK=master
                   NODE_STORAGE=false
                   CEPH=$ceph$
                   CEPH_DISK=True

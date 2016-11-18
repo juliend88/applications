@@ -149,6 +149,8 @@ resources:
       resource:
         type: kube-node.heat.yaml
         properties:
+          vpn_username: { get_resource: vpn_username }
+          vpn_password: { get_resource: vpn_password }
           token: { get_param: token }
           peer: { get_param: peer }
           domain: { get_param: domain }
@@ -174,6 +176,8 @@ resources:
       resource:
         type: kube-storage.heat.yaml
         properties:
+          vpn_username: { get_resource: vpn_username }
+          vpn_password: { get_resource: vpn_password }
           token: { get_param: token }
           peer: { get_param: peer }
           domain: { get_param: domain }
