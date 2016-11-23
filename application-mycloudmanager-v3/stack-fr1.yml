@@ -244,3 +244,9 @@ outputs:
   vpn_password:
     description: VPN Password
     value: { get_resource: vpn_password }
+  public_ip_Node:
+    description: Floating Node
+    value: {get_ressource: public_ip_node}
+  public_ip_Storage:
+    description: Floating Storage
+    value: {get_ressource: public_ip_storage}
