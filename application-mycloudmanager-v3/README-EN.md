@@ -12,6 +12,7 @@ This version of MyCloudManager (Beta) is a different stack of everything the tea
 * Repository app manager
 * Backup snapshot or backup soft
 * Time synchronization
+* Mutli-tenant, Multi-region management
 
 MyCloudManager has been completely developed by the CAT team ( Cloudwatt Automation Team).
 * MyCloudManager is fully HA (High Available)
@@ -57,21 +58,16 @@ After entering your login / password to your account, launch the wizard appears:
 ![oneclick](img/oneclick.png)
 
 
-As you may have noticed the 1-Click wizard asked to reenter your password Openstack (this will be fixed in a future version of MyCloudManager)
-You will find [here](https://console.cloudwatt.com/project/access_and_security/api_access/view_credentials/) your **tenant ID**, it's  same as **Projet ID**. It will be necessary to complete the wizard.
+As you may have noticed the 1-Click wizard asked to reenter your password Openstack. This information will allow the stack to save the configuration of the cluster in a Swift container on your tenant.
 
-By default, the wizard deploys two instances of type "small-1" who will be the `masters` instances, these are necessary for the proper functioning of Kubernetes HA. Regarding `nodes` they support all your *"pods "(applications)* on the stack. They should be size according to the use you want to make of MyCloudManager by default we proposed to deploy flavor type "n2.cw.standart-1".
+By default, the wizard deploys three instances of type "n2.cw.standard-2" who will be the `node` cluster instances based on CoreOS. They will support all your *"pods "(applications)* on this stack and all the applications proposed by MyCloudManager.
 
-You'll see later that 3 "tiny" instances  will be created, they help Kubernetes to know all of the nodes and the application deployed on the cluster.
+This `node` instances should be size according to the use you want to make of MyCloudManager because a variety of other instance types exists to suit your various needs, allowing you to pay only for the services you need. Instances are charged by the minute and capped at their monthly price (you can find more details on the [Pricing page](https://www.cloudwatt.com/en/pricing.html) on the Cloudwatt website).
 
-Also a variety of other instance types exists to suit your various needs, allowing you to pay only for the services you need. Instances are charged by the minute and capped at their monthly price (you can find more details on the [Pricing page](https://www.cloudwatt.com/en/pricing.html) on the Cloudwatt website).
+Two storage nodes will be deployed by the stack. They will host the storage services by Ceph.
+Ceph is a software allowing the management of volumes, here `Cinder`, to persist the   application data in case of cluster crash.
 
-
-To persist the application data, we will create standard volume in your tenant and automatically attach to your stack to deploy each application through Kubernetes to contain all the data of your different applications.
-
-By default, MyCloudManager will be deployed on two *master* instances, 3 *worker* instances and 3 *etcd* instances.
-
-Press **DEPLOY**.
+Now that you know all the stack ressources, you can press **DEPLOY**.
 
 The **1-click** handles the launch of the necessary calls on Cloudwatt API :
 
@@ -84,17 +80,17 @@ The **1-click** handles the launch of the necessary calls on Cloudwatt API :
 
 The stack is created automatically. You can see its progression by clicking on its name which will take you to the Horizon console. When all modules become "green", the creation is finished.
 
-Wait **5 minutes** that the entire stack is available.
+Wait **10 real minutes** that the entire stack is available.
 
 ![startopo](img/stacktopo.png)
 
-### Finish OpenVPN access
+### Finish VPN access
 
 In order to have access to all functionalities, we have set up a VPN connection.
 
 Here are the steps to follow :
 
-* First retrieve the output information of your stack,
+* First retrieve the output information of your stack, one FloatingIP and the VPN login, password.
 
 ![stack](img/sortie-stack.png)
 
@@ -137,16 +133,16 @@ After following this procedure you can now start the VPN connection.
 -----
 
 
-You can now access in the MyCloudManager administration interface via the URL **http://manager.default.svc.mycloudmanager** and begin to reap the benefit.
+You can now access in the MyCloudManager administration interface via the URL **http://private-ip-instance-cluster:30000** (exemple: **http://10.1.1.10:30000**) and begin to reap the benefit.
 
 It's (already) done !
 
 
 ## Enjoy
 
-Interface access and the various applications is via **IP** address or **DNS** names if the user rights on your computer allow you to do this. Indeed a **SkyDNS** container is launched at startup allowing you to benefit all the names in place. You can access on the different web interfaces applications by clicking **Go** or via URL request (ex: http://10.0.1.250:30601/ or http://zabbix.default.svc.mycloudmanager/).
+Interface access and the various applications is via **IP** address. You can access on the different web interfaces applications by clicking **Go** or via URL request (ex: http://10.1.1.10:30601/).
 
-We place a block volume every time you deploy an application to save all the **datas**  of the application containers. The volume is mounted on the cluster node that support your application and automatically attached to the container. This makes our stack to be much more robust. For information if the application crash and goes on another node, Kubernetes will dismount and re-mount the volume on the new node, therefore the application finds all of its data.
+As previously mentioned, Cinder block storage volumes have been provisioned within the cluster in order to save all **datas**  of the application containers. This makes our stack to be much more robust. For information the entire `Ceph` data is accessible from any machine in the cluster.
 
 
 #### Interface Overview
@@ -161,6 +157,8 @@ A menu is present in the top left of the page, it can move through the different
 * Tasks : all ongoing or completed tasks
 * Audit: list of actions performed
 * Backups: list all backup jobs
+* Volumes: List all Ceph volumes
+* Networks: list all tenants or regions in use for MyCloudManager
 * My Instances> Console: access to the console Horizon
 * My account> Cockpit ; access to the dashboard
 * Support: allows sending mail to support and cloud coach
@@ -176,10 +174,7 @@ As you can see, we have separated them into different sections.
 In the **Info** section you will find a presentation of the application with some useful links on the application.
 ![appresume](img/appresume.png)
 
-In the **Environments** section you can register here all the parameters to be used to configure the variables of the container to its launch environment.
-![paramsenv](img/paramenv.png)
-
-In the **Parameters** section you can register here all the different application configuration settings.
+In the **Parameters** section You can here modify the configuration file that will be launched when the container is created, available only for Rundeck. For all applications, the configuration will be done directly from the interface.
 ![paramapp](img/paramapp.png)
 
 
@@ -196,6 +191,126 @@ We also implemented a **audit** section so you can see all actions performed on 
 
 ![audit](img/audit.png)
 
+The menus **My Instances** and **My Account** are respectively used to access the Cloudwatt Horizon console and to manage your account via the Cockpit interface.
+
+The **Support** section will allow you, as the name implies, contacts the Cloudwatt support organization if requested or incident in your MyCloudManager. You can also contact a **cloud coach** to have more information regarding our ecosystem or feasibility of your projects that you want to focus on the Cloudwatt public cloud.
+
+Email :
+* Choose your need **Email Support** or  **Contact a Cloud Coach**,
+* The  **type** field will allow you to choose between **demand** ** or **incident**,
+* The **Reply Email Address** field will allow the support or cloud coach to have your address in order to respond,
+* The  **Request / Problems Encountered** field constitutes the body of the email.
+
+![supportemail](img/supportemail.png)
+
+Sending email is via the button ![sendmail](img/sendmail.png). This becomes ![mailsend](img/mailsend.png) if the email has been sent or ![mailfail](img/mailfail.png) if the server encountered an error while sending.
+
+
+### Volumes Management
+
+In order to make it easy as possible for you to manage your Cloudwatt resources, we have created a volume management interface that you will find in your MyCloudManager menu.
+
+In this interface you will find the details of your different Ceph volumes.
+
+![volumes](img/volumes.png)
+
+You can resize them according to your need by clicking on resize button
+![resize](img/resize.png)
+
+Warning: In this interface you will only find all the Ceph volumes. This page doesn't allow you to resize a Cinder storage volume. This part is still possible but it will have to be done from the Cloudwatt horizon console.
+
+### Cluster Monitoring
+
+This will allow you to see all the activity of the cluster and thus to make sure that your MyCloudManager is fully functional.
+
+We have provided you by default  several dashboards. They will allow you to have an overview of the activity of your cluster, but they will also allow you to go down much lower in the layers to analyze in depth the behavior of your MyCloudManager.
+
+You can access it, if you have chosen the monitoring option when launching your stack, from any private address of the cluster on port 31000 (ex: http://10.1.1.10:31000)
+
+**Monitoring Ceph**
+![cephdashboard](img/cephdashboard.png)
+
+**Monitoring Docker**
+![dockerdashboard](img/dockerdashboard.png)
+
+### Add a new Network for monitoring
+
+To add a new tenant or a new region to be monitored, you must go to the `Network` part of your MyCloudManager's menu.
+
+To add a holding or a region to be monitored you will have to click on the button
+![plus](img/plus.png).
+
+Now enter all of the tenant information as shown below:
+
+![tenantadd](img/tenantadd.png)
+
+Once you have entered your OpenStack Username as well as your OpenStack Password and the desired region, just click on the button ![refresh](img/refresh.png) to autorize MyCloudManager to query the Cloudwatt API to retrieve all the information you need to complete the following parameters.
+
+![networkinfo](img/networkinfo.png)
+
+Define on which network you want to attach your MyCloudManager, the security group and keypair that will apply to the CoreOS instance of type "s1.cw.small-1" which will deploy in the tenant or region. Because, MyCloudManager needs an `worker` instance in the tenant destination to communicate with all instances attached on this network.
+
+Once this information is added, a line with the holding information appear like this:
+
+![networkadd](img/networkadd.png)
+
+All you have to do is activate the yellow **toggle**![toggle](img/toggle.png) to deploy the `worker` instance in the destination.
+
+ When the instance was successfully created and joined the cluster, the **toggle**![toggle](img/toggle.png) become blue and you can see his IP in the status colomn.  
+
+![networkstatus](img/networkstatus.png)
+
+You have in a few clicks to add the management of a new region or tenant in your MyCloudManager cluster !
+
+### Add instances to MyCloudManager
+
+To add instances to MyCloudManager, 3 steps:
+
+  1. Attach your instance To the `worker` router added in the tenant
+  1. Run the curl command or the cloudconfig as needed
+  3. Start the desired services
+
+
+#### 1. Attach the instance at the instance of router:
+
+~~~bash
+$ neutron router-interface-add $Worker_ROUTER_ID $Instance_subnet_ID
+~~~
+
+Once this is done you are now in the ability to add your instance to MyCloudManager to instrumentalize.
+
+#### 2. Start the attachment script:
+
+
+On MyCloudManager, go to the **instance** menu and click the button ![bouton](img/plus.png) at the bottom right.
+
+We offer two commands to choose: one **Curl** and one **Copy to Clipboard** command to run a script in instance build.
+
+![addinstance](img/addinstance.png)
+
+
+Once the script is applied to the selected instance it should appear in the menu **instance** of your MyCloudManager .
+
+![appdisable](img/appdisable.png)
+
+
+**Trick** If you want to create an instance via the console horizon Cloudwatt and declare **directly** in your MyCloudManager, you should to select - in step 3 of the instance launch wizard - MyCloudManager network and the Security Group and - in step 4 - you can paste the command **Copy to Clipboard** command in the Custom Script field.
+
+![attachnetwork](img/attachnetwork.png)
+
+![launchinstance](img/launchinstance.png)
+
+
+#### 3. Start the required services on the instance :
+
+To help you maximum we created playbooks Ansible to automatically install and configure the agents for different applications.
+
+To do this, simply click on the application you want to install on your machine. The playbook Ansible concerned will be automatically installed.
+Once the application is installed, the application logo switch to color, allowing you to identify the applications installed on your instances.
+
+![appenable](img/appenable.png)
+
+### Instances Backup
 
 The **Backups** section allows you to backup all instances by your MyCloudManager. The backup may be performed in two ways, via a **snapshot** or via **duplicity** that has been called **soft**.
 * The snapshot backup will take a picture of the instance when you have schedule the backup.
@@ -232,84 +347,13 @@ Once you have clicked the button FINISH your configuration is now saved:
 You can always change the configuration of a backup via the button **edit**![bkpedit](img/bkpedit.png) that allows you to add or remove servers, change the backup directory and when it will run.
 The **delete** button ![bkpdelete](img/bkpdelete.png), for its part, allows to completely remove the selected backup job.
 
-#### Who says said backup said restore:
+#### Who said backup said restore:
 
 To restore a backup  **soft** or **snapshot** the approach stays the same. You must go to the menu **instances** of your MycloudManager. As you can see a new ![restore](img/restore.png) button appeared on all servers that have been saved.
 
 When you click on a pop-up open, you can now choose from the list the backup to restore  ![chooserestore](img/chooserestore.png).
+
 Once this has been done, if your backup was **snapshot**, the selected image will be restored instead of the current instance, if the backup is **soft** the selected files will be restored in the `restore` directory of your instance.
-
-##### Back to menu
-Finally , we integrated two navigation paths in the MyCloudManager menu : **My Instances** and **My Account**. They are respectively used to access the Cloudwatt Horizon console and to manage your account via the Cockpit interface.
-
-The **Support** section will allow you, as the name implies, contacts the Cloudwatt support organization if requested or incident in your MyCloudManager. You can also contact a **cloud coach** to have more information regarding our ecosystem or feasibility of your projects that you want to focus on the Cloudwatt public cloud.
-
-Email :
-* Choose your need **Email Support** or  **Contact a Cloud Coach**,
-* The  **type** field will allow you to choose between **demand** ** or **incident**,
-* The **Reply Email Address** field will allow the support or cloud coach to have your address in order to respond,
-* The  **Request / Problems Encountered** field constitutes the body of the email.
-
-![supportemail](img/supportemail.png)
-
-Sending email is via the button ![sendmail](img/sendmail.png). This becomes ![mailsend](img/mailsend.png) if the email has been sent or ![mailfail](img/mailfail.png) if the server encountered an error while sending.
-
-
-
-### Add instances to MyCloudManager
-
-To add instances to MyCloudManager, 3 steps:
-
-  1. Attach your router instance of MyCloudManager
-  1. Run the script attachment
-  3. Start the desired services
-
-
-#### 1. Attach the instance at the instance of router:
-
-~~~bash
-$ neutron router-interface-add $MyCloudManager_ROUTER_ID $Instance_subnet_ID
-~~~
-
-You will find all the information by inspecting the stack of resources via the command next heat :
-
-~~~bash
-$ heat resource-list $stack_name
-~~~
-
-Once this is done you are now in the ability to add your instance to MyCloudManager to instrumentalize .
-
-#### 2. Start the attachment script:
-
-
-On MyCloudManager, go to the **instance** menu and click the button ![bouton](img/plus.png) at the bottom right.
-
-We offer two commands to choose: one **Curl** and one **Copy to Clipboard** command to run a script in instance build.
-
-![addinstance](img/addinstance.png)
-
-
-Once the script is applied to the selected instance it should appear in the menu **instance** of your MyCloudManager .
-
-![appdisable](img/appdisable.png)
-
-
-**Trick** If you want to create an instance via the console horizon Cloudwatt and declare **directly** in your MyCloudManager, you should to select - in step 3 of the instance launch wizard - MyCloudManager network and the Security Group and - in step 4 - you can paste the command **Copy to Clipboard** command in the Custom Script field.
-
-![attachnetwork](img/attachnetwork.png)
-
-![launchinstance](img/launchinstance.png)
-
-
-#### 3. Start the required services on the instance :
-
-To help you maximum we created playbooks Ansible to automatically install and configure the agents for different applications.
-
-To do this, simply click on the application you want to install on your machine. The playbook Ansible concerned will be automatically installed.
-Once the application is installed, the application logo switch to color, allowing you to identify the applications installed on your instances.
-
-![appenable](img/appenable.png)
-
 
 ## The MyCloudManager services provided by applications
 
@@ -379,7 +423,7 @@ NTP container is used here so that all of your instances without access to the i
 To go further, here are some helpful links :
   * http://www.pool.ntp.org/fr/
 
-### The MyCloudManager versions **v2** (Beta)
+### The MyCloudManager versions **v3** (Beta)
 
 - CoreOS Stable 1010.6
 - Docker 1.10.3
@@ -420,7 +464,7 @@ The goal of this tutorial is to accelerate your start. At this point **you** are
 
 You now have an SSH access point on your virtual machine through the floating-IP and your private keypair (default user name `core`).
 
-You can access the MyCloudManager administration interface via the URL **[MyCloudManager](http://manager.default.svc.mycloudmanager)**
+You can access the MyCloudManager administration interface via the URL **[MyCloudManager](http://10.1.1.10:30000)**
 
 
 ## And after?

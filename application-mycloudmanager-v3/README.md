@@ -17,7 +17,7 @@ MyCloudManager a entièrement été développé par l'équipe CAT - Cloudwatt Au
 * MyCloudManager est entièrement HA (Haute Disponibilité)
 * Il repose sur une instance CoreOS
 * L'ensemble des applications se déploient dans des conteneurs Docker orchestrés par Kubernetes
-* L'interface utilisateur est developpée en React TIPSCRIPT??
+* L'interface utilisateur est developpée en React
 * De plus vous pouvez installer ou configurer, depuis l'interface graphique, l'ensemble des applications sur vos instances via des playbooks Ansible
 * Afin de sécuriser au maximum votre MyCloudManager, aucun port n'est exposé sur internet mis à part le port 22 pour le management des instances de la stack ainsi que le port 1723 pour l'accès VPN PPTP.
 
@@ -142,7 +142,7 @@ C’est (déjà) FINI !
 L'accès à l'interface et aux différents services se fait via l'adresse **IP**.
 Vous pourrez accéder aux différentes interfaces web des applications en cliquant sur **GO** ou via une requête URL (par exemple : http://10.1.1.10:30601/).
 
-Comme présisé précédemment des volumes de stockage bloc Cinder ont été provisionné au sein du cluster afin de sauvegarder l'ensemble des **datas** des conteneurs de l'application. Cela permet à notre stack d'être beaucoup plus robuste. Pour information l'ensemble des données contenu dans `Ceph` est accessible depuis n'importe quelle machine du cluster.
+Comme précisé précédemment des volumes de stockage bloc Cinder ont été provisionné au sein du cluster afin de sauvegarder l'ensemble des **datas** des conteneurs de l'application. Cela permet à notre stack d'être beaucoup plus robuste. Pour information l'ensemble des données contenu dans `Ceph` est accessible depuis n'importe quelle machine du cluster.
 
 ### Présentation de l'interface
 
@@ -157,7 +157,7 @@ Grâce au menu présent en haut en gauche de la page, vous pouvez vous déplacer
 * Audit : liste des actions effectuées
 * Backups: liste l'ensemble des backups avec MyCloudManager
 * Volumes: Liste l'ensemble des volumes Ceph du cluster
-* Networks: Gère les différents tenants utilisés dans MyCloudManager
+* Networks: Gère les différents tenants ou régions utilisés dans MyCloudManager
 * My Instances > Console : accès à la console Horizon
 * My Account > Cockpit : accès à mon compte
 * Support: permet l'envoi de mail aux équipes Support ou Cloud Coach de Cloudwatt
@@ -210,7 +210,7 @@ L'envoi du mail se fait via le bouton ![sendmail](img/sendmail.png). Celui-ci de
 
 Afin de vous faciliter le plus possible la gestion de vos ressources Cloudwatt, nous vous avons crée une interface de gestion des volumes que vous retrouverez dans le menu de votre MyCloudManager.
 
-Dans cette interface vous retrouverez le détail de vos différent volumes Ceph.
+Dans cette interface vous trouverez le détail de vos différent volumes Ceph.
 
 ![volumes](img/volumes.png)
 
@@ -220,7 +220,7 @@ A savoir: la vue que vous avez sur cette interface n'est autre que l'ensemble de
 
 ### Monitoring du cluster
 
-Toujours dans le but de vous faciliter au maximum la vie avec la gestion de vos différentes instances et ici du cluster CoreOS portant l'application MyCloudManager, nous avons mis en place du monitoring via Prometheus et Grafana.
+
 Celui-ci vas vous permettre de voir l'ensemble de l'activité du cluster et donc de vous assurez que votre MyCloudManager est totalement fonctionnel.
 
 Nous vous avons fournis par défaut un ensemble de dashboard qui vous permettrons d'avoir une vue d'ensemble de l'activité de votre cluster, mais ils vous permettrons aussi de descendre beaucoup plus bas dans les couches pour analyser en profondeur le comportement de votre MyCloudManager.
@@ -235,8 +235,6 @@ Vous pouvez y accéder, si vous avez choisi l'option monitoring au lancement de 
 
 ### Ajouter un nouveau réseau à monitorer
 
-Afin de pouvoir monitorer plusieurs région ou tenant, nous vous avons donné la possibilité d'étendre votre cluster via ????.
-
 Pour ajouter un tenant ou une nouvelle région à monitorer, vous devez vous rendre dans la partie `Network` du menu de votre MyCloudManager.
 
 Pour ajouter un tenant ou une région à monitorer il vous faudra cliquer sur le bouton ![plus](img/plus.png).
@@ -245,7 +243,7 @@ Entrez à présent l'ensemble des informations du tenant comme présenté ci-des
 
 ![tenantadd](img/tenantadd.png)
 
-A savoir, une fois que vous avez rentrer votre OpenStack Username ainsi que votre OpenStack Password et la region souhaitée, il vous suffit de cliquer sur le bouton ![refresh](img/refresh.png) afin que MyCloudManager aille interroger l'API Cloudwatt pour récupérer l'ensemble des informations dont vous avez besoin pour remplir les paramètres suivants.
+A savoir, une fois que vous avez entré votre OpenStack Username ainsi que votre OpenStack Password et la region souhaitée, il vous suffit de cliquer sur le bouton ![refresh](img/refresh.png) afin que MyCloudManager aille interroger l'API Cloudwatt pour récupérer l'ensemble des informations dont vous avez besoin pour remplir les paramètres suivants.
 
 ![networkinfo](img/networkinfo.png)
 
@@ -289,11 +287,11 @@ Dans MyCloudManager, aller dans le menu **Instances** et cliquer sur le bouton !
 Dans un premier temps choisissez dans le cartouche le réseau sur lequel la future instance sera attachée afin que l'on vous donne les bonnes commandes à copier sur l'instance.
 
 Nous proposons une commande de type **Curl** ainsi qu'un **Copy to Clipboard** permettant de lancer un script à la création de l'instance.
-![networkregister](img/newregister.png)
+![addinstance](img/addinstance.png)
 
 Une fois le script appliqué sur l'instance choisie, elle apparait dans le menu **Instances** de votre MyCloudManager avec la possibilité de déployer les applications que vous avez précédemment déployées.
 
-![addinstance](img/addinstance.png)
+![appdisable](img/appdisable.png)
 
 **Astuce :** Si vous souhaitez créer une instance via la console Horizon Cloudwatt et la déclarer **directement** dans votre MyCloudManager, il vous faut sélectionner le réseau de MyCloudManager ainsi que le security group de MyCloudManager et coller la commande précedemment copiée via le **Copy to Clipboard** dans le champ Script personnalisé.
 
@@ -423,9 +421,9 @@ Pour aller plus loin voici quelques liens utiles:
 
 ## Les versions
 
-### MyCloudManager **v2** (Beta)
+### MyCloudManager **v3** (Beta)
 
-  - CoreOS Stable 1235.?
+  - CoreOS Stable 1010.6
   - Docker 1.10.3
   - Kubernetes 1.3
   - Zabbix 3.0
@@ -463,7 +461,7 @@ Ce tutoriel a pour but d'accélerer votre démarrage. A ce stade **vous** êtes 
 
 Vous avez un point d'entrée sur votre machine virtuelle en SSH via l'IP flottante exposée et votre clé privée (utilisateur `core` par défaut).
 
-Vous pouvez accéder à l'interface d'administration de MyCloudManager via l'url **[MyCloudManager](http://manager.default.svc.mycloudmanager)**
+Vous pouvez accéder à l'interface d'administration de MyCloudManager via l'url **[MyCloudManager](http://10.1.1.10:30000)**
 
 ## Et la suite ?
 
