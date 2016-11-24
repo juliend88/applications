@@ -17,13 +17,13 @@ parameters:
     description: Activate Ceph
     label: Ceph
     type: boolean
-    default: 0
+    default: 1
 
   monitoring:
     description: Activate Monitoring
     label: Monitoring
     type: boolean
-    default: 0
+    default: 1
 
   domain:
     description: Wildcarded domain, ex example.com must have a *.example.com DNS entry
@@ -46,7 +46,6 @@ parameters:
           - n1.cw.standard-8
           - n1.cw.standard-12
           - n1.cw.standard-16
-          - n2.cw.highmem-4
   node_count:
     default: 3
     label: Node Count
@@ -244,9 +243,9 @@ outputs:
   vpn_password:
     description: VPN Password
     value: { get_resource: vpn_password }
-  public_ip_Node:
+  public_ips_nodes:
     description: Floating Node
-    value: {get_ressource: public_ip_node}
-  public_ip_Storage:
+    value: {get_attr: [nodes, public_ip_node]}
+  public_ips_storages:
     description: Floating Storage
-    value: {get_ressource: public_ip_storage}
+    value: {get_attr: [storages, public_ip_storage]}
