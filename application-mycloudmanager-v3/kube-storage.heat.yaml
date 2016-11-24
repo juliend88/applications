@@ -95,6 +95,7 @@ resources:
             $monitoring$: { get_param: monitoring }
             $vpn_username: { get_param: vpn_username }
             $vpn_password: { get_param: vpn_password }
+            $stack_name$: { get_param: "OS::stack_name" }
           template: |
             #cloud-config
             write_files:
@@ -130,6 +131,7 @@ resources:
                   NODE_TYPE=$os_region$
                   NODE_NETWORK=master
                   NODE_STORAGE=true
+                  STACK_NAME=$stack_name$
                   CEPH=$ceph$
                   CEPH_DISK=True
                   CEPH_DISK_DEVICE=/dev/vdb
