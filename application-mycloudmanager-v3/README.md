@@ -3,7 +3,7 @@
  ![logo](img/mycloudmanager.png)
 
 
-Cette troisième version de MyCloudManager (version Beta). Celle-ci a pour but de vous apporter un ensemble d'outils afin **d'unifier, d'harmoniser et monitorer votre tenant**. En effet celui-ci renferme un lot d'applications variées qui a pour vocation de vous aider dans la gestion au jour le jour de vos instances **Linux**:
+La troisième version de MyCloudManager (version Beta) est maintenant disponible. Celle-ci a pour but de vous apporter un ensemble d'outils afin **d'unifier, d'harmoniser et monitorer votre tenant**. En effet celui-ci renferme un lot d'applications variées qui a pour vocation de vous aider dans la gestion au jour le jour de vos instances **Linux**:
 * Monitoring et Supervision
 * Log management
 * Planificateur de taches
@@ -17,7 +17,7 @@ MyCloudManager a entièrement été développé par l'équipe CAT - Cloudwatt Au
 * MyCloudManager est entièrement HA (Haute Disponibilité)
 * Il repose sur une instance CoreOS
 * L'ensemble des applications se déploient dans des conteneurs Docker orchestrés par Kubernetes
-* L'interface utilisateur est developpée en React
+* L'interface utilisateur est developpée en React TIPSCRIPT??
 * De plus vous pouvez installer ou configurer, depuis l'interface graphique, l'ensemble des applications sur vos instances via des playbooks Ansible
 * Afin de sécuriser au maximum votre MyCloudManager, aucun port n'est exposé sur internet mis à part le port 22 pour le management des instances de la stack ainsi que le port 1723 pour l'accès VPN PPTP.
 
@@ -59,14 +59,14 @@ Après avoir entré vos login/password de votre compte, le wizard de lancement a
 
 Comme vous avez pu le constater le wizard du 1-Clic vous demande de saisir votre mot de passe Openstack. En effet ces informations vont permettre à la stack de sauvegarder la configuration du cluster dans un conteneur Swift sur votre tenant.
 
-Par défaut, le wizard propose un déploiement de trois instances de type "n2.cw.standard-2" qui seront les instances `node` composant un cluster de machine basé sur CoreOS. Elles porterons l'ensemble des *"pods" (applications)* déployés sur la stack ainsi que l'ensemble des applications proposées par MyCloudManager.
+Par défaut, le wizard propose un déploiement de trois instances de type "n2.cw.standard-2" qui seront les instances `node` composant un cluster de machines basées sur CoreOS. Elles porteront l'ensemble des *"pods" (applications)* déployés sur la stack ainsi que l'ensemble des applications proposées par MyCloudManager.
 
-Ceux-ci doivent être taillés en fonction de l'utilisation que vous souhaitez faire de MyCloudManager car comme vous le savez il existe une variété d'autres types d'instances pour la satisfaction de vos multiples besoins. Les instances sont facturées à la minute, vous permettant de payer uniquement pour les services que vous avez consommés et plafonnées à leur prix mensuel (vous trouverez plus de détails sur la [Page tarifs](https://www.cloudwatt.com/fr/produits/tarifs.html) du site de Cloudwatt).
+Ces instances `node` doivent être taillées en fonction de l'utilisation que vous souhaitez faire de MyCloudManager et de la charge que vous estimez car, comme vous le savez, il existe une variété d'autres types d'instances pour la satisfaction de vos multiples besoins. Les instances sont facturées à la minute, vous permettant de payer uniquement pour les services que vous avez consommés et plafonnées à leur prix mensuel (vous trouverez plus de détails sur la [Page tarifs](https://www.cloudwatt.com/fr/produits/tarifs.html) du site de Cloudwatt).
 
-De plus deux noeuds de type 'storage' seront déployés par la stack. Ils porteront les services Ceph.
-Ceph est un logiciel permettant la gestion de volumes, ici `cinder`, afin de persister les données applicative en cas de crash d'un composant du cluster.
+De plus deux noeuds de type 'storage' seront déployés par la stack. Ils porteront les services de stockage par Ceph.
+Ceph est un logiciel permettant la gestion de volumes, ici `cinder`, afin de persister les données applicatives en cas de crash d'un composant du cluster.
 
-Maintenant que vous connaissez l'ensemble des ressources composant la stack vous pouvez Appuyer sur **LANCER**.
+Maintenant que vous connaissez l'ensemble des ressources composant la stack, vous pouvez appuyer sur **LANCER**.
 
 Le **1-clic** s'occupe de lancer les appels nécessaires sur les API Cloudwatt pour :
 
@@ -77,20 +77,19 @@ Le **1-clic** s'occupe de lancer les appels nécessaires sur les API Cloudwatt p
 * lancer le conteneur **rabbitmq**,
 * lancer le conteneur **traefik**
 
-La stack se créer automatiquement. Vous pouvez en voir la progression en cliquant sur son nom ce qui vous ménera à la console Horizon. Quand tous les modules deviendront « verts », la création sera terminée.
+La stack se crée automatiquement. Vous pouvez en voir la progression en cliquant sur son nom ce qui vous menera à la console Horizon. Quand tous les modules deviendront « verts », la création sera terminée.
 
-Attendez **10 minutes** que l'ensemble du cluster soit complètement initialisé.
+Attendez **10 vraies minutes** que l'ensemble du cluster soit complètement initialisé.
 
 ![startopo](img/stacktopo.png)
 
 ### Finaliser l'accès VPN
 
-Afin d'avoir accès à l'ensemble des fonctionnalitées, nous avons mis en place une connexion VPN.
+Afin d'avoir accès à l'ensemble des fonctionnalités, nous avons mis en place une connexion VPN.
 
 Voici la démarche à suivre :
 
-* Dans un premier temps, récupérez les informations de sortie de votre stack,
-à savoir, une des FloatingIP du cluster ainsi que les logins et mot de passe fournis en sortie de la stack.
+* Dans un premier temps, récupérez les informations de sortie de votre stack, à savoir une des FloatingIP du cluster ainsi que les login et mot de passe fournis en sortie de la stack.
 
 ![stack](img/sortie-stack.png)
 
@@ -143,7 +142,7 @@ C’est (déjà) FINI !
 L'accès à l'interface et aux différents services se fait via l'adresse **IP**.
 Vous pourrez accéder aux différentes interfaces web des applications en cliquant sur **GO** ou via une requête URL (par exemple : http://10.1.1.10:30601/).
 
-Comme présisé précédemment des volumes cinder ont été provisionné au sein du cluster afin de sauvegarder l'ensemble des **datas** des conteneurs de l'application. Cela rend notre stack d'être beaucoup plus robuste. Pour information l'ensemble des données contenu dans `Ceph` est accessible depuis n'importe quelle machine du cluster.
+Comme présisé précédemment des volumes de stockage bloc Cinder ont été provisionné au sein du cluster afin de sauvegarder l'ensemble des **datas** des conteneurs de l'application. Cela permet à notre stack d'être beaucoup plus robuste. Pour information l'ensemble des données contenu dans `Ceph` est accessible depuis n'importe quelle machine du cluster.
 
 ### Présentation de l'interface
 
@@ -158,10 +157,10 @@ Grâce au menu présent en haut en gauche de la page, vous pouvez vous déplacer
 * Audit : liste des actions effectuées
 * Backups: liste l'ensemble des backups avec MyCloudManager
 * Volumes: Liste l'ensemble des volumes Ceph du cluster
-* Networks: Gère les différents tenant utilisé dans MyCloudManager
+* Networks: Gère les différents tenants utilisés dans MyCloudManager
 * My Instances > Console : accès à la console Horizon
-* My account > Cockpit : accès à mon compte
-* Support: permet l'envoie de mail aux équipes support ou cloudcoach
+* My Account > Cockpit : accès à mon compte
+* Support: permet l'envoi de mail aux équipes Support ou Cloud Coach de Cloudwatt
 
 ![menu](img/menu.png)
 
@@ -186,30 +185,30 @@ Les **tasks** permettent un suivi des actions effectuées sur MyCloudManager. El
 
 ![tasks](img/tasks.png)
 
-Il vous est possible d'annuler une tache en attente en cas d'erreur dans le menu **tasks** en cliquant sur ![horloge](img/horloge.png) ce qui vous affichera ensuite ce logo ![poubelle](img/poubelle.png).
+Il vous est possible d'annuler une tache en attente en cas d'erreur dans le menu **Tasks** en cliquant sur ![horloge](img/horloge.png) ce qui vous affichera ensuite ce logo ![poubelle](img/poubelle.png).
 
-Nous avons mis en place une section **audit** afin que vous puissiez voir l'ensemble des actions effectuées sur chacune de vos instances et un export en Excel (.xlsx) si vous souhaitez effectuer un post-processing ou garder ces informations pour des raisons de sécurité via le bouton ![xlsx](img/xlsx.png).
+Nous avons mis en place une section **Audit** afin que vous puissiez voir l'ensemble des actions effectuées sur chacune de vos instances et un export en Excel (.xlsx) si vous souhaitez effectuer un post-processing ou garder ces informations pour des raisons de sécurité via le bouton ![xlsx](img/xlsx.png).
 
 ![audit](img/audit.png)
 
 
-**My Instances** et **My Account**. Ils servent respectivement à accéder à la console Horizon Cloudwatt et à la gestion de votre compte via l'interface Cockpit.
+Les menus **My Instances** et **My Account** servent respectivement à accéder à la console Horizon Cloudwatt et à la gestion de votre compte utilisateur (vous y trouverez par exemple vos factures) via l'interface Cockpit.
 
-La section **Support** va vous permettre, comme son nom l'indique, de contacter le support en cas de demande ou incident sur MyCloudManager. Vous pouvez aussi contacter un **CloudCoach** afin d'avoir de plus amples informations en ce qui concerne notre ecosystem ou la faisabilité de vos différents projets que vous souhaitez porter sur le cloud public Cloudwatt.
+La section **Support** va vous permettre, comme son nom l'indique, de contacter notre service Support en cas de demande ou incident sur MyCloudManager. Vous pouvez aussi contacter un **CloudCoach** afin d'avoir de plus amples informations en ce qui concerne notre écosysteme ou la faisabilité de vos différents projets que vous souhaitez porter sur le cloud public Cloudwatt.
 
 Email :
 * Choisissez votre besoin **Email Support** ou **Contact a Cloud Coach**,
 * Le champ **type** va vous permettre de choisir entre **demande** ou **incident**,
-* Le champ **Reply Email Address** va permettre au support ou au cloud coach d'avoir votre adresse afin de pouvoir vous répondre,
-* le champ **Request/Problems encountered** constitue le corps du mail.
+* Le champ **Reply Email Address** va permettre à notre service Support ou à nos Cloud Coach d'avoir votre adresse afin de pouvoir vous répondre,
+* Le champ **Request/Problems encountered** constitue le corps du mail ou nous vous demandons d'expliciter le plus précisement possible votre demande
 
 ![supportemail](img/supportemail.png)
 
-L'envoi du mail se fait via le bouton ![sendmail](img/sendmail.png). Celui-ci devient ![mailsend](img/mailsend.png) si le mail est correctement envoyé ou ![mailfail](img/mailfail.png) si le serveur a rencontré une erreur pendant l'envoi.
+L'envoi du mail se fait via le bouton ![sendmail](img/sendmail.png). Celui-ci devient ![mailsend](img/mailsend.png) si le mail est correctement envoyé ou ![mailfail](img/mailfail.png) si le serveur mail a rencontré une erreur pendant l'envoi.
 
 ### Gestion des volumes
 
-Afin de vous faciliter le plus possible la gestion de vos ressources Cloudwatt. Nous vous avons crée une interface de gestion des volumes que vous retrouverez dans le menu de votre MyCloudManager.
+Afin de vous faciliter le plus possible la gestion de vos ressources Cloudwatt, nous vous avons crée une interface de gestion des volumes que vous retrouverez dans le menu de votre MyCloudManager.
 
 Dans cette interface vous retrouverez le détail de vos différent volumes Ceph.
 
@@ -217,16 +216,16 @@ Dans cette interface vous retrouverez le détail de vos différent volumes Ceph.
 
 vous pouvez les redimensionner selon votre besoin en cliquant sur le bouton resize ![resize](img/resize.png)
 
-A savoir, la vue que vous avez sur cette interface, n'est autre que l'ensemble des volumes Ceph. En aucun cas cette pages permet de redimensionner un volume cinder. Cette partie reste possible mais il faudra le faire à la main dans la console horizon de Cloudwatt.
+A savoir: la vue que vous avez sur cette interface n'est autre que l'ensemble des volumes Ceph. En aucun cas cette page ne permet de redimensionner un volume de stockage Cinder. Cette partie reste possible mais il faudra le faire depuis la console horizon de Cloudwatt.
 
 ### Monitoring du cluster
 
-Toujours dans le but de vous faciliter au maximum la vie avec la gestion de vos différentes instances et ici du cluster CoreOS portant l'application MyCloudManager. Nous avons mis en place du monitoring via Prometheus et grafana.
-Celui-ci vas vous permettre de voir l'ensemble de l'activité du cluster.
+Toujours dans le but de vous faciliter au maximum la vie avec la gestion de vos différentes instances et ici du cluster CoreOS portant l'application MyCloudManager, nous avons mis en place du monitoring via Prometheus et Grafana.
+Celui-ci vas vous permettre de voir l'ensemble de l'activité du cluster et donc de vous assurez que votre MyCloudManager est totalement fonctionnel.
 
-Nous vous avons fournis par défaut un ensemble de dashboard qui vous permettrons d'avoir une vue d'ensemble de l'activité de votre cluster, mais ils vous permettrons aussi de descendre beaucoup plus bas dans les couches.
+Nous vous avons fournis par défaut un ensemble de dashboard qui vous permettrons d'avoir une vue d'ensemble de l'activité de votre cluster, mais ils vous permettrons aussi de descendre beaucoup plus bas dans les couches pour analyser en profondeur le comportement de votre MyCloudManager.
 
-Vous pouvez y accéder si vous avez choisi l'option monitoring au lancement de votre stack sur n'importe quelle adresse privée du cluster sur le port 31000 (ex: http://10.1.1.10:31000)
+Vous pouvez y accéder, si vous avez choisi l'option monitoring au lancement de votre stack, depuis n'importe quelle adresse privée du cluster sur le port 31000 (ex: http://10.1.1.10:31000)
 
 **Monitoring Ceph**
 ![cephdashboard](img/cephdashboard.png)
@@ -236,40 +235,40 @@ Vous pouvez y accéder si vous avez choisi l'option monitoring au lancement de v
 
 ### Ajouter un nouveau réseau à monitorer
 
-Afin de pouvoir monitorer plusieurs région ou tenant, nous vous avons donné la possibilité d'étendre votre cluster via.
+Afin de pouvoir monitorer plusieurs région ou tenant, nous vous avons donné la possibilité d'étendre votre cluster via ????.
 
-Pour ajouter un tenant ou une nouvelle région à monitorer, vous devez vous rendre dans la partie `network` du menu de votre MyCloudManager.
+Pour ajouter un tenant ou une nouvelle région à monitorer, vous devez vous rendre dans la partie `Network` du menu de votre MyCloudManager.
 
 Pour ajouter un tenant ou une région à monitorer il vous faudra cliquer sur le bouton ![plus](img/plus.png).
 
-Entrez à présent l'ensemble des informations du tenant comme présenté ci-dessous
+Entrez à présent l'ensemble des informations du tenant comme présenté ci-dessous :
 
 ![tenantadd](img/tenantadd.png)
 
-A savoir, une fois que vous avez rentrer votre Openstack Username ainsi que votre Openstack Password et la region souhaité, il vous suffit de cliquer sur le bouton ![refresh](img/refresh.png) afin que MyCloudManager aille interoger l'api Cloudwatt pour récupérer l'ensemble des informations dont vous avez besoin pour remplir les paramètre suivant.
+A savoir, une fois que vous avez rentrer votre OpenStack Username ainsi que votre OpenStack Password et la region souhaitée, il vous suffit de cliquer sur le bouton ![refresh](img/refresh.png) afin que MyCloudManager aille interroger l'API Cloudwatt pour récupérer l'ensemble des informations dont vous avez besoin pour remplir les paramètres suivants.
 
 ![networkinfo](img/networkinfo.png)
 
-Définissez sur quel réseau vous souhaitez attacher votre MyCloudManager, ainsi que le sécurity groupe et la keypair qui vont s'appliquer à l'instance CoreOS de type "s1.cw.small-1" qui va se deployer dans le tenant en question. Car oui MyCloudManager à besoin d'une instance de type `worker` dans le tenant de destination afin de pouvoir communiquer avec les machines qui sont rattachées au réseau.
+Définissez sur quel réseau vous souhaitez attacher votre MyCloudManager, ainsi que le security groupe et la keypair qui vont s'appliquer à l'instance CoreOS de type "s1.cw.small-1" qui va se déployer dans le tenant en question. Car, oui, MyCloudManager à besoin d'une instance de type `worker` dans le tenant de destination afin de pouvoir communiquer avec les machines qui sont rattachées au réseau.
 
-Une fois les informations entrée, une ligne avec les informations du tenant devrait apparaître comme ceci :
+Une fois les informations entrées, une ligne avec les informations du tenant doit apparaître comme ceci :
 
 ![networkadd](img/networkadd.png)
 
- il vous reste plus qu'a activer le **toggle**![toggle](img/toggle.png) de couleur jaune pour déployer l'instance `worker` dans le tenant de destination.
+Il vous reste plus qu'à activer le **toggle**![toggle](img/toggle.png) de couleur jaune pour déployer l'instance `worker` dans le tenant de destination.
 
- Lorsque l'instance s'est correctement créée et a rejoint le cluster le **toggle**![toggle](img/toggle.png) passe au bleu et le status vous bonne l'ip de ce nouveau noeud.
+Lorsque l'instance s'est correctement créée et a rejoint le cluster, le **toggle**![toggle](img/toggle.png) passe au bleu et le status vous donne l'ip de ce nouveau noeud.
 
 ![networkstatus](img/networkstatus.png)
 
-Voila vous venez d'ajouter la gestion d'une nouvelle région ou tenant au cluster MyCloudManager.
+Voila, vous venez en quelques clics d'ajouter la gestion d'une nouvelle région ou tenant au cluster MyCloudManager !
 
 
 ### Ajouter des instances à MyCloudManager
 
 Afin d'ajouter des instances à MyCloudManager, 3 étapes :
 
-  1. Attacher votre instance au routeur du `worker` ajouter dans le tenant
+  1. Attacher votre instance au routeur du `worker` ajouté dans le tenant
   2. Lancer la commande curl ou le cloudconfig selon votre besoin
   3. Lancer les services souhaités
 
@@ -287,7 +286,7 @@ Une fois ceci effectué vous êtes maintenant dans la capacité d'ajouter votre 
 
 Dans MyCloudManager, aller dans le menu **Instances** et cliquer sur le bouton ![bouton](img/plus.png) en bas à droite.
 
-Dans un premier temps choisissez dans le cartouche le réseau sur lequel la future instance sera attaché afin que l'on vous donne les bonnes commande à copier sur l'instance.
+Dans un premier temps choisissez dans le cartouche le réseau sur lequel la future instance sera attachée afin que l'on vous donne les bonnes commandes à copier sur l'instance.
 
 Nous proposons une commande de type **Curl** ainsi qu'un **Copy to Clipboard** permettant de lancer un script à la création de l'instance.
 ![networkregister](img/newregister.png)
@@ -296,7 +295,7 @@ Une fois le script appliqué sur l'instance choisie, elle apparait dans le menu 
 
 ![addinstance](img/addinstance.png)
 
-**Astuce :** Si vous souhaitez créer une instance via la console horizon Cloudwatt et la déclarer **directement** dans votre MyCloudManager, il vous faut sélectionner - à l'étape 3 du wizard de lancement d'instance - le réseau de MyCloudManager ainsi que le security group de MyCloudManager et - à l'étape 4 - collez la commande précedemment copiée via le **Copy to Clipboard** dans le champ Script personnalisé.
+**Astuce :** Si vous souhaitez créer une instance via la console Horizon Cloudwatt et la déclarer **directement** dans votre MyCloudManager, il vous faut sélectionner le réseau de MyCloudManager ainsi que le security group de MyCloudManager et coller la commande précedemment copiée via le **Copy to Clipboard** dans le champ Script personnalisé.
 
 ![networkchoose](img/networkchoose.png)
 
@@ -313,31 +312,31 @@ Ceci fait, le logo de l'application passe en couleur, ce qui vous permet, d'un s
 
 ### Backup des instances
 
-La section **Backups** vous permet de sauvegarder l'ensemble des instances rattachées à MyCloudManager. Le backup peut-être effectué de deux façons, via un **snapshot** ou via **duplicity** que l'on a appelé **soft**.
-* Le backup snapshot va prendre une photo de l'instance au moment ou vous avez schedulé le backup. Vous pourrez ensuite le retrouver dans la liste de vos images sur votre tenant.
-* Le backup soft va lui déployer un conteneur duplicity et sauvegarder l'ensemble du contenu du ou des répertoires que vous avez sélectionné (`/data`ou `/config`) dans un conteneur **swift** que vous pourrez également retrouver dans la partie **containers** de votre tenant (stockage objet).
-Si vous souhaitez sauvegarder un groupe de serveurs il vous faudra alors les séléctionner lors de la création du backup.
+La section **Backups** vous permet de sauvegarder l'ensemble des instances rattachées à MyCloudManager. Le backup peut être effectué de deux façons, via un **snapshot** ou via **duplicity** que l'on a appelé **soft**.
+* Le **backup snapshot** va prendre une photo de l'instance au moment ou vous avez schedulé le backup. Vous pourrez ensuite le retrouver dans la liste de vos images sur votre tenant.
+* Le **backup soft** va lui déployer un conteneur duplicity et sauvegarder l'ensemble du contenu du ou des répertoires que vous avez sélectionné (`/data`ou `/config`) dans un conteneur **swift** que vous pourrez également retrouver dans la partie **containers** de votre tenant (stockage objet).
+Si vous souhaitez sauvegarder un groupe de serveurs, il vous faudra alors les sélectionner lors de la création du backup.
 En ce qui concerne la programmation des backups, plusieurs choix s'offre à vous :
 
 * **Daily**: un backup par jour à l'heure souhaitée,
 * **Weekly**: un backup par semaine au jour et à l'heure souhaité,
-* **Montly**: un backup par mois à la date et a l'heure souhaitée.
+* **Montly**: un backup par mois à la date et à l'heure souhaitée.
 
-Afin de commencer une nouvelle configuration de backup il faut cliquer sur le bouton![bouton](img/plus.png)
+Afin de commencer une nouvelle configuration de backup, il faut cliquer sur le bouton![bouton](img/plus.png)
 
 Donner un nom à votre configuration de backup :
 ![newconfig](img/backupinfo.png)
 
-Selectionner les serveurs que vous voulez ajouter :
+Sélectionner les serveurs que vous voulez ajouter :
 ![Backupselectsrv](img/selectsrv.png)
 
 Définissez maintenant **quand** et **comment** le backup de ces serveurs sera fait :
 
-* Snapshot : Prend une "photo" de votre instance et la dépose dans votre bibliothèque d'image sur votre tenant (attention: un snapshot s'éxecute à froid comme indiqué dans cet article [Fin du Hot Snapshot, place au Cold Snapshot pour une sauvegarde plus consistante !](https://dev.cloudwatt.com/fr/blog/fin-du-hot-snapshot-place-au-cold-snapshot.html) )
+* Backup Snapshot : Prend une "photo" de votre instance et la dépose dans votre bibliothèque d'image sur votre tenant (attention: un snapshot s'éxecute à froid comme indiqué dans cet article [Fin du Hot Snapshot, place au Cold Snapshot pour une sauvegarde plus consistante !](https://dev.cloudwatt.com/fr/blog/fin-du-hot-snapshot-place-au-cold-snapshot.html) )
 
 ![bkpsnapshot](img/bkpsnapshot.png)
 
-* Soft : Copie l'intégralité des répertoires cochés dans un conteneur swift
+* Backup Soft : Copie l'intégralité des répertoires cochés dans un conteneur de stockage objet swift
 
 ![bkpsoft](img/bkpsoft.png)
 
@@ -346,15 +345,15 @@ Une fois que vous avez cliqué sur le bouton FINISH votre configuration est à p
 
 ![bkpsvg](img/bkpsvg.png)
 
-Vous pouvez à tout moment modifier la configuration d'un backup via le bouton **editer** ![bkpedit](img/bkpedit.png) qui vous permet d'ajouter ou de supprimer des serveurs, de modifier le ou les répertoires à sauvegarder ainsi que le moment où celui-ci sera exécuté.  Le bouton **supprimer** ![bkpdelete](img/bkpdelete.png), quant à lui, permet de supprimer complètement le job de backup selectionné.
+Vous pouvez à tout moment modifier la configuration d'un backup via le bouton **editer** ![bkpedit](img/bkpedit.png) qui vous permet d'ajouter ou de supprimer des serveurs, de modifier le ou les répertoires à sauvegarder ainsi que le moment où ce backup sera exécuté.  Le bouton **supprimer** ![bkpdelete](img/bkpdelete.png), quant à lui, permet de supprimer complètement le job de backup selectionné.
 
 #### Qui dit backup dit restauration :
 
- Afin de restorer un backup qu'il soit **soft** ou **snapshot** la démarche reste là même. Il faut vous rendre de le menu **instances** de votre MycloudManager. Comme vouss pouvez le constater un nouveau bouton ![restore](img/restore.png) est apparu sur l'ensemble des serveurs qui ont été sauvegardés.
+Afin de restorer un backup qu'il soit **soft** ou **snapshot** la démarche reste là même. Il faut vous rendre dans le menu **instances** de votre MycloudManager. Comme vous pouvez le constater un nouveau bouton ![restore](img/restore.png) est apparu sur l'ensemble des serveurs qui ont été sauvegardés.
 
- Lorsque vous cliquez dessus un pop-up s'ouvre et vous pouvez maintenant choisir via le menu déroulant le backup que vous voulez restorer. ![chooserestore](img/chooserestore.png)
+Lorsque vous cliquez dessus un pop-up s'ouvre et vous pouvez maintenant choisir, via le menu déroulant, le backup que vous voulez restorer. ![chooserestore](img/chooserestore.png)
 
- Une fois cette action effectuée, si votre backup était de type **snapshot**, l'image selectionnée va être restorée à la place de l'instance en cours, sinon pour le backup **soft** l'integralité des dossiers sélectionné seront restaurés dans le répertoire `restore` de votre instance.
+Une fois cette action effectuée, si votre backup était de type **snapshot**, l'image selectionnée va être restorée à la place de l'instance en cours, sinon pour le backup **soft** l'integralité des dossiers sélectionnés seront restaurés dans le répertoire `restore` de votre instance.
 
 ## Les Services de MyCloudManager fournis par les applications
 
@@ -426,7 +425,7 @@ Pour aller plus loin voici quelques liens utiles:
 
 ### MyCloudManager **v2** (Beta)
 
-  - CoreOS Stable 1010.6
+  - CoreOS Stable 1235.?
   - Docker 1.10.3
   - Kubernetes 1.3
   - Zabbix 3.0
