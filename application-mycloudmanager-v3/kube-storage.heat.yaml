@@ -73,7 +73,7 @@ resources:
     type: OS::Nova::Server
     properties:
       key_name: { get_param: keypair_name }
-      image: Coreos-1185.3
+      image: CoreOS Stable 1010.6
       flavor: { get_param: flavor_name }
       user_data_format: RAW
       networks:
@@ -380,7 +380,7 @@ resources:
     properties:
       volume_id: { get_resource: cinder_volume }
       instance_uuid: { get_resource: node }
-      mountpoint: /dev/vdb
+      mountpoint: /dev/vdc
 
 outputs:
   public_ip_storage:
