@@ -162,6 +162,7 @@ Grâce au menu présent en haut en gauche de la page, vous pouvez vous déplacer
 * My Account > Cockpit : accès à mon compte
 * Support: permet l'envoi de mail aux équipes Support ou Cloud Coach de Cloudwatt
 
+
 ![menu](img/menu.png)
 
 L'ensemble des applications présentes dans la section **Apps** sont paramétrables grâce au bouton **Settings** ![settings](img/settings.png) présent sur chaque vignette.
@@ -249,18 +250,31 @@ A savoir, une fois que vous avez entré votre OpenStack Username ainsi que votre
 
 Définissez sur quel réseau vous souhaitez attacher votre MyCloudManager, ainsi que le security groupe et la keypair qui vont s'appliquer à l'instance CoreOS de type "s1.cw.small-1" qui va se déployer dans le tenant en question. Car, oui, MyCloudManager à besoin d'une instance de type `worker` dans le tenant de destination afin de pouvoir communiquer avec les machines qui sont rattachées au réseau.
 
+**Attention:**
+Le réseau sur lequel vous attachez votre instance `worker` doit avoir accès à internet. En effet comme vous le savez l'ensemble des fonctionnalités de MyCloudManager repose sur des conteneur Docker. Ceux-ci étant hébergé sur le hub.docker il faut que l'instance puisse les télécharger.
+
+Pour faire communiquer votre instance `worker` avec le reste du monde, vous avez deux possibilités, il faut que le SNAT soit activer sur votre routeur neutron ou que votre instance `worker` ait une adresse ip publique.
+
+Pour activer le snat, il faut lors de la création de votre routeur dans la console horizon Cloudwatt, spécifier le réseau `public` sur l'interface externe de votre routeur, comme ci-dessous :
+
+![networkpublic](img/networkpublic.png)
+
 Une fois les informations entrées, une ligne avec les informations du tenant doit apparaître comme ceci :
 
 ![networkadd](img/networkadd.png)
 
 Il vous reste plus qu'à activer le **toggle**![toggle](img/toggle.png) de couleur jaune pour déployer l'instance `worker` dans le tenant de destination.
 
-Lorsque l'instance s'est correctement créée et a rejoint le cluster, le **toggle**![toggle](img/toggle.png) passe au bleu et le status vous donne l'ip de ce nouveau noeud.
+Lorsque l'instance s'est correctement créée et a rejoint le cluster, le **toggle**![toggle](img/toggle.png) passe au bleu et le statut vous donne l'ip de ce nouveau noeud.
 
 ![networkstatus](img/networkstatus.png)
 
-Voila, vous venez en quelques clics d'ajouter la gestion d'une nouvelle région ou tenant au cluster MyCloudManager !
+Voila, vous venez en quelques clics d'ajouter la gestion d'une nouvelle région ou d'un nouveau tenant au cluster MyCloudManager !
 
+#### Supprimer un réseau
+
+Nous vous avons aussi donné la possibilité de supprimer une région ou un tenant. Pour cela rien de plus simple, il vous suffit de cliquer sur le **toggle** de couleur bleu.
+Cela aura pour effet de supprimer l'instance `worker` de votre tenant. Une fois ceci fait il ne vous restera plus qu'a supprimer la ligne concernée grâce au bouton ![trash](img/trash.png).
 
 ### Ajouter des instances à MyCloudManager
 
