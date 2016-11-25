@@ -250,6 +250,15 @@ Once you have entered your OpenStack Username as well as your OpenStack Password
 
 Define on which network you want to attach your MyCloudManager, the security group and keypair that will apply to the CoreOS instance of type "s1.cw.small-1" which will deploy in the tenant or region. Because, MyCloudManager needs an `worker` instance in the tenant destination to communicate with all instances attached on this network.
 
+**Warning:**
+The network of your `worker` instance must have access to internet. As you know all the functionality of MyCloudManager are container. They are hosted on the hub.docker. Your instance have to download them.
+
+To be sure that your `worker` instance communicate with the rest of the world, you have two options: the SNAT must be enabled on your neutron router, or your` worker` instance must have a public ip address.
+
+To enable snat, when creating your router in the Cloudwatt horizon console, specify the `public` network on the external interface of your router, as below:
+
+![networkpublic](img/networkpublic.png)
+
 Once this information is added, a line with the holding information appear like this:
 
 ![networkadd](img/networkadd.png)
@@ -260,7 +269,12 @@ All you have to do is activate the yellow **toggle**![toggle](img/toggle.png) to
 
 ![networkstatus](img/networkstatus.png)
 
-You have in a few clicks to add the management of a new region or tenant in your MyCloudManager cluster !
+You have in a few clicks to add the management of a new region or a new tenant in your MyCloudManager cluster !
+
+#### Delete Network
+
+We've also given you the ability to delete a region or a tenant. To do this, simply click on the blue **toggle**.
+This will remove the `worker` instance on your tenant. Once this is done, you will only have to remove the line with the button ![Trash](img / trash.png).
 
 ### Add instances to MyCloudManager
 
