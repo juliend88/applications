@@ -2,7 +2,7 @@
 
 ## Episode 31 : MyStart
 
-Cette stack vous permet d'intialiser votre tenant par la création rapide d'une keypair, d'un réseau et d'un security group. Ces ressources sont des pré-requis pour la création d'instances dans le cloud.
+Cette stack vous permet d'intialiser votre tenant par la création rapide d'une keypair, d'un réseau, d'un security group et d'un routeur de type SNAT (qui a accès à internet). Ces ressources sont des pré-requis pour la création d'instances dans le cloud.
 
 
 ## Preparations
