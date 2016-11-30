@@ -3,7 +3,7 @@
 ### Written by the CAT team
 ##
 #
-heat_template_version: 2013-05-23
+heat_template_version: 2014-10-16
 
 description: Kubernetes HA
 
@@ -245,7 +245,7 @@ outputs:
     value: { get_resource: vpn_password }
   public_ips_nodes:
     description: Floating Node
-    value: {get_attr: [nodes, public_ip_node]}
+    value: {'get_attr': [nodes, outputs_list, public_ip_node]}
   public_ips_storages:
     description: Floating Storage
-    value: {get_attr: [storages, public_ip_storage]}
+    value: {get_attr: [storages, outputs_list, public_ip_storage]}
