@@ -259,6 +259,14 @@ Pour activer le snat, il faut lors de la création de votre routeur dans la cons
 
 ![networkpublic](img/networkpublic.png)
 
+Vous n'avez rien compris ? Pas de panique, nous vous avons mis à disposition une stack heat afin de faire l'ensemble des actions:
+
+* Création d'une keypair,
+* Création d'un réseau,
+* Création d'un routeur ayant accès à internet via le réseau public de votre tenant,
+
+Vous pourrez la retrouver ![ici](https://github.com/cloudwatt/applications/tree/master/blueprint-mystart-snat)
+
 Une fois les informations entrées, une ligne avec les informations du tenant doit apparaître comme ceci :
 
 ![networkadd](img/networkadd.png)
@@ -450,6 +458,7 @@ Pour aller plus loin voici quelques liens utiles:
 
 ### Liste des distributions Linux supportées par MyCloudManager
 
+* Ubuntu 16.04
 * Ubuntu 14.04
 * Debian Jessie
 * Debian Wheezy
@@ -468,6 +477,19 @@ Login et mot de passe par défaut des applications MyCloudManager:
 
 Les autres applications n'ont pas d'interface web, donc pas de login/mot de passe, excepté **Artifactory** qui n'a pas d'authentification.
 
+### Exemples de déploiement
+
+#### Mono-tenant, Mono-region
+
+![monotenant](img/monotenant.png)
+
+#### Mono-tenant, Multi-region
+
+![mutli-region](img/multiregion.png)
+
+#### Multi-tenant, mutli-region
+
+![multitenant](img/multitenant-multiregion.png)
 
 ## So watt  ?
 
@@ -482,10 +504,9 @@ Vous pouvez accéder à l'interface d'administration de MyCloudManager via l'url
 Cet article permet de vous familiariser avec cette nouvelle version de MyCloudManager. Elle est mise à la disposition de tous les utilisateurs Cloudwatt en **mode Beta** et donc pour le moment gratuitement.
 
 L'intention de la CAT (Cloudwatt Automation Team) est de fournir des améliorations sur une base bimestrielle (tous les 2 mois). Dans notre roadmap, nous prévoyons entre autre :
-* l'instrumentalisation d'instances Ubuntu 16.04 (possible aujourd'hui mais uniquement avec la commande CURL post-création),
+
 * l'instrumentalisation d'instances Windows
 * une version francaise,
-* ne plus avoir à resaisir ses identifiants,
 * bien d'autres choses
 
 Des suggestions d'améliorations ? Des services que vous souhaiteriez voir ? N'hésitez pas à nous contacter [apps.cloudwatt@orange.com](mailto:apps.cloudwatt@orange.com)

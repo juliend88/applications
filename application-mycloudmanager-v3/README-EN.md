@@ -259,6 +259,16 @@ To enable snat, when creating your router in the Cloudwatt horizon console, spec
 
 ![networkpublic](img/networkpublic.png)
 
+You didn't understand? Do not panic, we have provided you with a stack heat to do all this actions:
+
+* Create a keypair,
+* Create a network,
+* Create Router with internet access via your Public network,
+
+You can find this stack her:  ![ici](https://github.com/cloudwatt/applications/tree/master/blueprint-mystart-snat)
+
+Vous pourrez la retrouver ![ici](https://github.com/cloudwatt/applications/tree/master/blueprint-mystart-snat)
+
 Once this information is added, a line with the holding information appear like this:
 
 ![networkadd](img/networkadd.png)
@@ -453,6 +463,7 @@ To go further, here are some helpful links :
 
 ### List of distributions supported by MyCloudManager
 
+* Ubuntu 16.04
 * Ubuntu 14.04
 * Debian Jessie
 * Debian Wheezy
@@ -472,6 +483,21 @@ Login and password by default of MyCloudManager applications :
 
 Other applications have no web interface, so no login/ password, except **Artifactory** which has no authentication.
 
+### Deployment examples
+
+#### Mono-tenant, Mono-region
+
+![monotenant](img/monotenant.png)
+
+#### Mono-tenant, Multi-region
+
+![mutli-region](img/multiregion.png)
+
+#### Multi-tenant, mutli-region
+
+![multitenant](img/multitenant-multiregion.png)
+
+
 ## So watt?
 
 The goal of this tutorial is to accelerate your start. At this point **you** are the master of the stack.
@@ -480,16 +506,14 @@ You now have an SSH access point on your virtual machine through the floating-IP
 
 You can access the MyCloudManager administration interface via the URL **[MyCloudManager](http://10.1.1.10:30000)**
 
-
 ## And after?
 
 This article will acquaint you with this first version of MyCloudManager. It is available to all Cloudwatt users in **Beta mode** and therefore currently free.
 
 The intention of the CAT ( Cloudwatt Automation Team) is to provide improvements on a bimonthly basis. In our roadmap, we expect among others:
-* Instrumentalisation of Ubuntu 16.04 instance (possible today but only with the CURL command),
+
 * Instrumentalisation of Windows instances,
 * A French version,
-* not having to re-enter your credentials,
 * many other things
 
 Suggestions for improvement ? Services that you would like ? do not hesitate to contact us [apps.cloudwatt@orange.com](mailto:apps.cloudwatt@orange.com)
