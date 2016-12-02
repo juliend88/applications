@@ -366,3 +366,6 @@ resources:
     properties:
       floating_network_id: { get_param: floating_network }
 
+outputs:
+  public_ip_node:
+    value: {get_attr: [floating_ip, floating_ip_address]}

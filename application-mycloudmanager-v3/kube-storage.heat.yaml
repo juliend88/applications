@@ -380,3 +380,6 @@ resources:
       instance_uuid: { get_resource: node }
       mountpoint: /dev/vdc
 
+outputs:
+  public_ip_storage:
+    value: {get_attr: [floating_ip, floating_ip_address]}
