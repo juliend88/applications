@@ -107,6 +107,7 @@ resources:
                   echo WEAVE_PEERS=\"$peer$\" > /etc/weave.env
                   echo WEAVEPROXY_ARGS=\"--rewrite-inspect\" >> /etc/weave.env
                   echo WEAVE_PASSWORD=\"$token$\" >> /etc/weave.env
+                  echo CHECKPOINT_DISABLE=1 >> /etc/weave.env
               - path: /opt/pidalio-init.sh
                 permissions: 0700
                 owner: "root:root"
@@ -256,7 +257,7 @@ resources:
                     ExecStartPre=/usr/bin/curl \
                       --silent \
                       --location \
-                      git.io/weave \
+                      https://github.com/weaveworks/weave/releases/download/v1.8.2/weave \
                       --output /opt/bin/weave
                     ExecStartPre=/usr/bin/chmod +x /opt/bin/weave
                     ExecStart=/opt/bin/weave setup
