@@ -147,7 +147,7 @@ resources:
                   then
                     echo "Pidalio already checkout"
                   else
-                    git clone https://github.com/juliend88/pidalio.git /opt/pidalio
+                    git clone --branch 3.0 https://github.com/juliend88/pidalio.git /opt/pidalio
                   fi
                   /opt/pidalio/init.sh
               - path: /opt/pidalio-units.sh
