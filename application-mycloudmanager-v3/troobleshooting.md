@@ -2,7 +2,7 @@
 
 Si vous êtes dans ce cas, vous avez probablement été trop impatient !
 
-Une (petite) attente de 5 minutes est nécessaire pour que les conteneurs Docker de MyCloudManager soient téléchargés et configurés. Donc, quand la stack heat est terminée et que toutes les ressources sont “vertes”, attendez vraiment 10 minutes avant de créer votre connexion VPN.
+Une (petite) attente de 10 minutes est nécessaire pour que l'ensemble du cluster MyCloudManager soit initialisé et que toutes les images docker soient téléchargés et configurés. Donc, quand la stack heat est terminée et que toutes les ressources sont “vertes”, attendez vraiment 10 minutes avant d'initialiser votre connexion VPN.
 
 
 # Ma stack est montée, mon accès VPN en place mais je n'arrive pas à accéder à MyCloudManager, que faire ?
