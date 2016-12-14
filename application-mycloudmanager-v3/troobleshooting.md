@@ -7,7 +7,7 @@ Une (petite) attente de 10 minutes est nécessaire pour que l'ensemble du cluste
 
 # Ma stack est montée, mon accès VPN en place mais je n'arrive pas à accéder à MyCloudManager, que faire ?
 
-Si votre MyCloudManager est bien actif, que vous êtes bien connecté au VPN, mais que vous n’arrivez pas à accéder à l’adresse http://10.1.1.10:30000 essayer avec une autre adresse d'un des membres du cluster ex : http://10.1.1.11:30000 ou http://10.1.1.12:30000.
+Si votre MyCloudManager est bien actif, que vous êtes bien connecté au VPN, mais que vous n’arrivez pas à accéder à l’adresse http://10.1.1.10:30000 essayer avec une autre adresse d'un des membres du cluster (ex: http://10.1.1.11:30000 ou http://10.1.1.12:30000).
 
 # Je ne peux pas accéder aux applications de MyCloudManager, que faire ?
 
