@@ -13,7 +13,7 @@ Si votre MyCloudManager est bien actif, que vous êtes bien connecté au VPN, ma
 
 il faut se connecter en ssh sur une des instances du cluster, et taper la commande `kubectl get pods` afin de vérifer l'état des pods pourtant l'ensemble de vos applications,
 
-![pods](imgtrooble\pods.png)
+![pods](imgtrooble/pods.png)
 
 si un ou des pods ne sont pas en état `running` au bout de 5min après le lancement de votre application c'est que celui ci à rencontré un problème à son lancement. Pour résoudre le problème il suffit de supprimer le pod en question avec la commande `kubectl delete pods PODNAME` exemple `kubectl delete pods app-zabbix-4280307708-qqf8n`. kubernetes va ensuite s'occuper de le relancer.
 
@@ -96,8 +96,8 @@ Une fois sur l'instance tapez la commande suivante `fleetctl list-units`.
 Si l'ensemble des services n'est pas en état `running` comme sur l'image si dessous, c'est que votre cluster à rencontré un problème à son lancement.
 La solution la plus efficace mais certes radicale est de redémarrer l'ensemble des machines du cluster soit via la console soit via l'invite de commande.
 
-![fleet](imgtrooble\fleet.png)
+![fleet](imgtrooble/fleet.png)
 
 Une fois que l'ensemble des services sont en running vous pouvez taper la commande `kubectl get pods` et vous verrez que les pods permettant de fonctionnement de MyCloudManager seront en création.
 
-![podsmcm](imgtrooble\podsmcm.png)
+![podsmcm](imgtrooble/podsmcm.png)
