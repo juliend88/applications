@@ -104,7 +104,7 @@ Une fois que l'ensemble des services sont en running vous pouvez taper la comman
 
 # J'ai lancé ma stack plusieurs fois sans succès
 
-Comme vous avez pu le voir un token est demandé lors de la création de votre stack. Le token sert à crypter l'ensemble des données qui transite au sein du cluster. Cependant il sert aussi à restaurer l'état de votre cluster telle qu'il était lors de la dernière sauvegarde etcd. L’inconvénient est que si vous aviez une stack qui n'était pas correctement paramétrée et que vous en créez une autre avec le même token, le cluster va restaurer l'état de l'ancien cluster ce qui rendra votre stack une nouvelle fois inutilisable.
+Comme vous avez pu le voir un token est demandé lors de la création de votre stack. Le token sert à chiffrer l'ensemble des données qui transite au sein du cluster. Cependant il sert aussi à restaurer l'état de votre cluster telle qu'il était lors de la dernière sauvegarde etcd. L’inconvénient est que si vous aviez une stack qui n'était pas correctement paramétrée et que vous en créez une autre avec le même token, le cluster va restaurer l'état de l'ancien cluster ce qui rendra votre stack une nouvelle fois inutilisable.
 Pour palier à cela il faut soit supprimer le conteneur switch contenant la sauvegarde de la base etcd de votre cluster, soit entrer un autre token de 16 caractères.
 
 # Je souhaite faire le backup de mes instances via MyCloudManager ?
