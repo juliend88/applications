@@ -136,7 +136,7 @@ Pour contourner le problème il faut Installer le client VPN Shimo que vous trou
 
 Puis le configurer comme ci-dessous :
 
-![pptp](imgtrooble\pptp.png)
-![config](imgtrooble\config.png)
-![connexion](imgtrooble\connexion.png)
-![mcm](imgtrooble\mcm.png)
+![pptp](imgtrooble/pptp.png)
+![config](imgtrooble/config.png)
+![connexion](imgtrooble/connexion.png)
+![mcm](imgtrooble/mcm.png)
