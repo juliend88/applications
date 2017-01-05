@@ -106,3 +106,23 @@ Une fois que l'ensemble des services sont en running vous pouvez taper la comman
 
 Comme vous avez pu le voir un token est demandé lors de la création de votre stack. Le token sert à crypter l'ensemble des données qui transite au sein du cluster. Cependant il sert aussi à restaurer l'état de votre cluster telle qu'il était lors de la dernière sauvegarde etcd. L’inconvénient est que si vous aviez une stack qui n'était pas correctement paramétrée et que vous en créez une autre avec le même token, le cluster va restaurer l'état de l'ancien cluster ce qui rendra votre stack une nouvelle fois inutilisable.
 Pour palier à cela il faut soit supprimer le conteneur switch contenant la sauvegarde de la base etcd de votre cluster, soit entrer un autre token de 16 caractères.
+
+# Je souhaite faire le backup de mes instances via MyCloudManager ?
+
+Voici quelques informations qui pourront vous être utiles concernant le backup de type Snapshot :
+
+  - un snapshot fait une copie de votre instance, mais pas des volumes Cinder que vous auriez pu éventuellement y attacher.
+  - sur les instances ayant un disque ephémère (n2.cw.highmem-4+, i2.cw.largessd-4+) seul le disque système sera sauvegardé.
+
+Afin de palier aux problèmes nous avons mis en place un backup de type 'Soft'. [en savoir plus ?](https://github.com/cloudwatt/applications/blob/master/application-mycloudmanager-v3/README.md#backup-des-instances)
+
+# Je souhaite me passer de la connexion VPN ?
+
+### Sachez que se passer de la connexion VPN n'est pas recommandé !
+
+Il faut ouvrir les port suivant dans votre groupe de sécurité depuis l'interface de la console horizon Cloudwatt. [en savoir plus ?](https://support.cloudwatt.com/debuter/cons-2-acces-et-securite.html)
+
+   - MyCloudManager : 30000
+   - Zabbix : 30601
+   - Rundeck : 30101
+   - Graylog : 30501
