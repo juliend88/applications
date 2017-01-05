@@ -126,3 +126,17 @@ Il faut ouvrir les port suivant dans votre groupe de sécurité depuis l'interfa
    - Zabbix : 30601
    - Rundeck : 30101
    - Graylog : 30501
+
+# Je souhaite me connecter depuix un MacOs Sierra (10.12)
+
+Depuis cette dernière version Apple a retiré la possibilité de se connecter à un VPN PPTP :
+
+Pour contourner le problème il faut Installer le client VPN Shimo que vous trouverez [ici](https://www.shimovpn.com/)
+
+
+Puis le configurer comme ci-dessous :
+
+![pptp](imgtrooble\pptp.png)
+![config](imgtrooble\config.png)
+![connexion](imgtrooble\connexion.png)
+![mcm](imgtrooble\mcm.png)
