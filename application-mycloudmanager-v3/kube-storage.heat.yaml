@@ -73,7 +73,7 @@ resources:
     type: OS::Nova::Server
     properties:
       key_name: { get_param: keypair_name }
-      image: CoreOS Stable 1010.6
+      image: coreos 1353.7
       flavor: { get_param: flavor_name }
       user_data_format: RAW
       networks:
@@ -147,7 +147,7 @@ resources:
                   then
                     echo "Pidalio already checkout"
                   else
-                    git clone --branch 3.0 https://github.com/juliend88/pidalio.git /opt/pidalio
+                    git clone --branch v3 https://github.com/juliend88/pidalio.git /opt/pidalio
                   fi
                   /opt/pidalio/init.sh
               - path: /opt/pidalio-units.sh
